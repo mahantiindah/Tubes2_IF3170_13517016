@@ -8,10 +8,9 @@ from tkinter import messagebox
 import os
 from tkinter import filedialog
 from tkinter import ttk
-import tkinter as tk
 from tkinter import Tk, Text, BOTH, W, N, E, S
 from tkinter.filedialog import askopenfile 
-from ui7 import *
+#from ui7 import *
 # import back
 #pengaturan layar UI
 #width = int(NSScreen.mainScreen().frame().size.width)
@@ -22,16 +21,31 @@ height = 720
 class Deck:
     def __init__(self, master):
         self.source_img = Label(master, text='')
-        self.dest_img = Label(master, text='')
+        self.det_img = Label(master, text='')
         # deckimg = PhotoImage(file = os.path.dirname(os.path.abspath('tesuto.py')) + '/purple_back.png')
         # self.source_img.configure(image = deckimg)
         # self.source_img.image = deckimg
+
+        #SOURCE IMAGE
+        im = PIL.Image.open("blankcard.jpg")
+        im = im.resize((300, 300), PIL.Image.ANTIALIAS)
+        photo=ImageTk.PhotoImage(im)  
+        self.source_img.configure(image = photo)
+        self.source_img.image = photo 
+
+        #DETECTION IMAGE
+        im = PIL.Image.open("blankcard.jpg")
+        im = im.resize((300, 300), PIL.Image.ANTIALIAS)
+        photo=ImageTk.PhotoImage(im)  
+        self.det_img.configure(image = photo)
+        self.det_img.image = photo 
+        
         
         # Konfigurasi button: text, ukuran, command yang dijalankan saat pencet, padding
         self.img_button = Button(master, text="Open Image", font=("Comic Sans MS",10), command=self.img_button, padx=34, pady=3)
-        self.rule_edit_button = Button(master, text="Open Rule Editor",font=("Comic Sans MS",10),command=self.rule_edit, padx=11, pady=3)
-        self.rules_button = Button(master, text="Show Rules",font=("Comic Sans MS",10),command=self.rules, padx=38, pady=3)
-        self.facts_button = Button(master, text="Show Facts",font=("Comic Sans MS",10),command=self.facts, padx=37, pady=3)
+        self.rule_edit_button = Button(master, text="Open Rule Editor",font=("Comic Sans MS",10),command=lambda: self.rule_edit(master), padx=11, pady=3)
+        self.rules_button = Button(master, text="Show Rules",font=("Comic Sans MS",10),command=lambda: self.rules(master), padx=38, pady=3)
+        self.facts_button = Button(master, text="Show Facts",font=("Comic Sans MS",10),command=lambda: self.facts(master), padx=37, pady=3)
         self.exite_button = Button(master, text=" Exit ",font=("Comic Sans MS",10),command=self.exite, padx=18, pady=3)
 
         # Konfigurasi label (tulisan di atas gambar)
@@ -81,7 +95,7 @@ class Deck:
         self.labelRules.place(x=780, y=400)
         self.labelShape.place(x=1050, y=250)  
         self.source_img.place(x=100, y=90)
-        self.dest_img.place(x=780, y=90)
+        self.det_img.place(x=670, y=90)
         self.img_button.place(x=1050, y=50)
         self.rule_edit_button.place(x=1050, y=90)
         self.rules_button.place(x=1050, y=130)
@@ -106,20 +120,23 @@ class Deck:
         self.hitRules_label.place(x=710, y=450)
     
 		#konfigurasi button untuk hovering mouse
-        self.img_button.bind("<Enter>", self.on_enter_img)
-        self.img_button.bind("<Leave>", self.on_leave_img)
+        # self.img_button.bind("<Enter>", self.on_enter_img)
+        # self.img_button.bind("<Leave>", self.on_leave_img)
 
-        self.rule_edit_button.bind("<Enter>", self.on_enter_rule_edit)
-        self.rule_edit_button.bind("<Leave>", self.on_leave_rule_edit)
+        # self.rule_edit_button.bind("<Enter>", self.on_enter_rule_edit)
+        # self.rule_edit_button.bind("<Leave>", self.on_leave_rule_edit)
 
-        self.rules_button.bind("<Enter>", self.on_enter_rules_button)
-        self.rules_button.bind("<Leave>", self.on_leave_rules_button)
+        # self.rules_button.bind("<Enter>", self.on_enter_rules_button)
+        # self.rules_button.bind("<Leave>", self.on_leave_rules_button)
         
-        self.exite_button.bind("<Enter>", self.on_enter_exite)
-        self.exite_button.bind("<Leave>", self.on_leave_exite)
+        # self.exite_button.bind("<Enter>", self.on_enter_exite)
+        # self.exite_button.bind("<Leave>", self.on_leave_exite)
 
 	# Fungsi yang dijalnkan saat button dipencet
-    
+    def retrieve_input(self, area, window):
+        inputValue=area.get("1.0","end-1c")
+        print(inputValue)
+        window.destroy()
     # Pick source image
     def img_button(self):
         # OPEN IMAGE BASE
@@ -148,16 +165,43 @@ class Deck:
     #     window.destroy()
 
      # Open rule editor
-    def rule_edit(self):
+    def rule_edit(self, master):
         print('rules edit')
         # create_window()
+        window = Toplevel(master)
+        window.wm_title("Edit Rules")
+        area = Text(window)
+        area.pack()
+        b = Button(window, text="Save", command=lambda: self.retrieve_input(area, window))
+        b.pack()
+        #window.attributes('-topmost', 'true')
 
     # Show rules
-    def rules(self):
+    def rules(self, master):
+        print('rules button u')
+        #INSERT NAMA FILE RULES
+        file = open("tes.txt","r")
+        content = file.read()
+        print(content)
+        window = Toplevel(master)
+        #window = Tk()
+        window.wm_title("Rules")
+        lRules = ttk.Label(window, text=content)
+        #lRules = Label(window, textvariable=content, relief=RAISED )
+        lRules.pack()
+        #window.attributes('-topmost', 'true')
         print('rules button u')
 
     # Show facts
-    def facts(self):
+    def facts(self, master):
+        #INSERT NAMA FILE FACTS
+        file = open("tes.txt","r")
+        content = file.read()
+        window = Toplevel(master)
+        window.wm_title("Facts")
+        lFacts = ttk.Label(window, text=content)
+        #lRules = Label(window, textvariable=content, relief=RAISED )
+        lFacts.pack()
         print('facts')
 
     def compareShape(self):
