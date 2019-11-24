@@ -6,7 +6,7 @@ from clips import Environment, Symbol
 e = Environment()
 
 # Pilih rule
-e.load('segitiga2.clp')
+e.load('geometri.clp')
 
 # Load image
 img = cv2.imread("segitiga.jpg", cv2.IMREAD_GRAYSCALE)
@@ -46,6 +46,7 @@ for cnt in contours:
             e.assert_string(strInput)
         cv2.putText(img, "Segitiga", (x, y), font, 1, (0))
     elif len(approx) == 4:
+        
         cv2.putText(img, "Persegi", (x, y), font, 1, (0))
     elif len(approx) == 5:
         cv2.putText(img, "Segi Lima", (x, y), font, 1, (0))
@@ -75,3 +76,17 @@ cv2.imwrite("result.jpg", img)
 # cv2.imshow("Threshold", threshold)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+def getAngle(a, b, c):
+    ang = math.degrees(math.atan2(c[1]-b[1], c[0]-b[0]) - math.atan2(a[1]-b[1], a[0]-b[0]))
+    return ang + 360 if ang < 0 else ang
+
+'''def isSamaSisi(app):
+    edgeList = []
+    for i in range(len(app)):
+        #edgeList.append()
+        '''
+
+def checkEqual(lst):
+   return lst[1:] == lst[:-1]
