@@ -52,15 +52,26 @@ for cnt in contours:
     elif len(approx) == 6:
         cv2.putText(img, "Segi Enam", (x, y), font, 1, (0))
 
-# Print all facts
+# Print initial facts
+print("\nInitial Facts")
 for fact in e.facts():
     print(fact)
+
+print("\nAgenda")
+for agenda in e.activations():
+    print(agenda)
 
 # Kalo mau run sekali, pake e.run(1)
 # Kalo mau run sampai habis, pake e.run()
 e.run()
+
+# Print all facts at the end
+print("\n\nFinal Facts")
+for fact in e.facts():
+    print(fact)
+
 cv2.imshow("shapes", img)
-cv2.imwrite("segitiga-result.jpg", img)
+cv2.imwrite("result.jpg", img)
 # cv2.imshow("Threshold", threshold)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
