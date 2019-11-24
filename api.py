@@ -38,20 +38,27 @@ for cnt in contours:
         # e.assert_string("(titik 2 1)")
 
         # Assert fakta berupa titik shape
-        for a in approx:
+        f'''or a in approx:
 
             print("(titik " + str(a[0][0]) + " " + str(a[0][1]) + ")")
             strInput = "(titik " + str(a[0][0]) + " " + str(a[0][1]) + ")"
             print(strInput)
-            e.assert_string(strInput)
+            e.assert_string(strInput)'''
+         e.assert_string('(titik 3)')
         cv2.putText(img, "Segitiga", (x, y), font, 1, (0))
     elif len(approx) == 4:
-        
+        e.assert_string('(titik 4)')
         cv2.putText(img, "Persegi", (x, y), font, 1, (0))
+
     elif len(approx) == 5:
+        e.assert_string('(titik 5)')
         cv2.putText(img, "Segi Lima", (x, y), font, 1, (0))
+
     elif len(approx) == 6:
+
+        e.assert_string('(titik 6)')
         cv2.putText(img, "Segi Enam", (x, y), font, 1, (0))
+
 
 # Print initial facts
 print("\nInitial Facts :")
