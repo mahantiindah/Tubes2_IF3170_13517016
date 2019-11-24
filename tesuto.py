@@ -4,9 +4,14 @@ from random import sample
 from PIL import ImageTk
 import PIL.Image
 #from AppKit import NSScreen
-from tkinter import *
 from tkinter import messagebox
 import os
+from tkinter import filedialog
+from tkinter import ttk
+import tkinter as tk
+from tkinter import Tk, Text, BOTH, W, N, E, S
+from tkinter.filedialog import askopenfile 
+from ui7 import *
 # import back
 #pengaturan layar UI
 #width = int(NSScreen.mainScreen().frame().size.width)
@@ -38,20 +43,35 @@ class Deck:
         self.labelShape = Label(master, text="What shape do you want", font=("Comic Sans MS",12))
 
         # Konfigurasi button pilih bentuk untuk dibandingkan
-        self.b1 = Button(master, text="Segitiga lancip", font=("Comic Sans MS",8))
-        self.b2 = Button(master, text="Segitiga tumpul", font=("Comic Sans MS",8))
-        self.b3 = Button(master, text="Segitiga siku-siku", font=("Comic Sans MS",8))
-        self.b4 = Button(master, text="Segitiga sama kaki dan siku-siku", font=("Comic Sans MS",8))
-        self.b5 = Button(master, text="Segitiga sama kaki dan tumpul", font=("Comic Sans MS",8))
-        self.b6 = Button(master, text="Segitiga sama kaki dan lancip", font=("Comic Sans MS",8))
-        self.b7 = Button(master, text="Segitiga sama sisi", font=("Comic Sans MS",8))
-        self.b8 = Button(master, text="Segiempat beraturan", font=("Comic Sans MS",8))
-        self.b9 = Button(master, text="Segitiga berbentuk layang-layang", font=("Comic Sans MS",8))
-        self.b10 = Button(master, text="Trapezium sama kaki", font=("Comic Sans MS",8))
-        self.b11 = Button(master, text="Trapezium rata kanan", font=("Comic Sans MS",8))
-        self.b12 = Button(master, text="Trapezium rata kiri", font=("Comic Sans MS",8))
-        self.b13 = Button(master, text="Segi lima sama sisi", font=("Comic Sans MS",8))
-        self.b14 = Button(master, text="Segi enam sama sisi", font=("Comic Sans MS",8))
+        self.b1 = Button(master, text="Segitiga lancip", font=("Comic Sans MS",8), command=self.compareShape)
+        self.b2 = Button(master, text="Segitiga tumpul", font=("Comic Sans MS",8), command=self.compareShape)
+        self.b3 = Button(master, text="Segitiga siku-siku", font=("Comic Sans MS",8), command=self.compareShape)
+        self.b4 = Button(master, text="Segitiga sama kaki dan siku-siku", font=("Comic Sans MS",8), command=self.compareShape)
+        self.b5 = Button(master, text="Segitiga sama kaki dan tumpul", font=("Comic Sans MS",8), command=self.compareShape)
+        self.b6 = Button(master, text="Segitiga sama kaki dan lancip", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b7 = Button(master, text="Segitiga sama sisi", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b8 = Button(master, text="Segiempat beraturan", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b9 = Button(master, text="Segitiga berbentuk layang-layang", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b10 = Button(master, text="Trapezium sama kaki", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b11 = Button(master, text="Trapezium rata kanan", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b12 = Button(master, text="Trapezium rata kiri", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b13 = Button(master, text="Segi lima sama sisi", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b14 = Button(master, text="Segi enam sama sisi", font=("Comic Sans MS",8),command=self.compareShape)
+
+        # Konfigurasi hasil detection result, matched facts, hit rules
+        self.detectionResult, self.detectionResult_text = "", StringVar()
+        self.detectionResult_text.set(self.detectionResult)
+        self.detectionResult_label = Label(master, textvariable=self.detectionResult_text)
+
+        self.matchedFacts, self.matchedFacts_text = "", StringVar()
+        self.matchedFacts_text.set(self.matchedFacts)
+        self.matchedFacts_label = Label(master, textvariable=self.matchedFacts_text)
+
+        self.hitRules, self.hitRules_text = "", StringVar()
+        self.hitRules_text.set(self.hitRules)
+        self.hitRules_label = Label(master, textvariable=self.hitRules_text)
+
+
 
         # Pemosisian semua elemen ke layar
         self.labelSouImage.place(x=100, y=50)
@@ -61,6 +81,7 @@ class Deck:
         self.labelRules.place(x=780, y=400)
         self.labelShape.place(x=1050, y=250)  
         self.source_img.place(x=100, y=90)
+        self.dest_img.place(x=780, y=90)
         self.img_button.place(x=1050, y=50)
         self.rule_edit_button.place(x=1050, y=90)
         self.rules_button.place(x=1050, y=130)
@@ -80,6 +101,9 @@ class Deck:
         self.b12.place(x=1050, y=610)
         self.b13.place(x=1050, y=640)
         self.b14.place(x=1050, y=670)
+        self.detectionResult_label.place(x=100, y=500)
+        self.matchedFacts_label.place(x=450, y=500)
+        self.hitRules_label.place(x=780, y=500)
     
 		#konfigurasi button untuk hovering mouse
         self.img_button.bind("<Enter>", self.on_enter_img)
@@ -98,16 +122,33 @@ class Deck:
     
     # Pick source image
     def img_button(self):
-                # OPEN IMAGE BASE
-        im = PIL.Image.open("104032.jpg")
+        # OPEN IMAGE BASE
+        self.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        a = self.filename
+        print (self.filename)
+        # return 1
+        im = PIL.Image.open(self.filename)
         im = im.resize((300, 300), PIL.Image.ANTIALIAS)
         photo=ImageTk.PhotoImage(im)  
         self.source_img.configure(image = photo)
         self.source_img.image = photo 
 
-    # Open rule editor
+    # def create_window():
+    #     window = tk.Toplevel(self)
+    #     area = tk.Text(window)
+    #     area.pack()
+    #     b = tk.Button(window, text="Save", command=lambda: retrieve_input(area, window))
+    #     b.pack()
+
+    # def retrieve_input(area, window):
+    #     inputValue=area.get("1.0","end-1c")
+    #     print(inputValue)
+    #     window.destroy()
+
+     # Open rule editor
     def rule_edit(self):
-        print('rules edyt button u')
+        print('rules edit')
+        # create_window()
 
     # Show rules
     def rules(self):
@@ -116,6 +157,16 @@ class Deck:
     # Show facts
     def facts(self):
         print('facts')
+
+    def compareShape(self):
+        # Jalanin fungsinya
+        if (1):
+            self.detectionResult_text.set("YES");
+        
+        else:
+            self.detectionResult_text.set("NO");
+        self.matchedFacts_text.set("matchedFacts")
+        self.hitRules_text.set("hitRules")
 
     # Popup on exit
     def exite(self):
