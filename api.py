@@ -53,11 +53,11 @@ for cnt in contours:
         cv2.putText(img, "Segi Enam", (x, y), font, 1, (0))
 
 # Print initial facts
-print("\nInitial Facts")
+print("\nInitial Facts :")
 for fact in e.facts():
     print(fact)
 
-print("\nAgenda")
+print("\nAgenda :")
 for agenda in e.activations():
     print(agenda)
 
@@ -66,9 +66,13 @@ for agenda in e.activations():
 e.run()
 
 # Print all facts at the end
-print("\n\nFinal Facts")
+print("\n\nFinal Facts :")
 for fact in e.facts():
     print(fact)
+
+print("\nRules :")
+for rule in e.rules():
+    print(rule)
 
 cv2.imshow("shapes", img)
 cv2.imwrite("result.jpg", img)
