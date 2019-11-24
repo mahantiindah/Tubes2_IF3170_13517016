@@ -61,15 +61,15 @@ class Deck:
         # Konfigurasi hasil detection result, matched facts, hit rules
         self.detectionResult, self.detectionResult_text = "", StringVar()
         self.detectionResult_text.set(self.detectionResult)
-        self.detectionResult_label = Label(master, textvariable=self.detectionResult_text)
+        self.detectionResult_label = Label(master, textvariable=self.detectionResult_text, borderwidth=2, width=15, height = 5, relief="groove", font=("Comic Sans MS",25))
 
         self.matchedFacts, self.matchedFacts_text = "", StringVar()
         self.matchedFacts_text.set(self.matchedFacts)
-        self.matchedFacts_label = Label(master, textvariable=self.matchedFacts_text)
+        self.matchedFacts_label = Label(master, textvariable=self.matchedFacts_text, borderwidth=2, width=15, height = 5, relief="groove", font=("Comic Sans MS",25))
 
         self.hitRules, self.hitRules_text = "", StringVar()
         self.hitRules_text.set(self.hitRules)
-        self.hitRules_label = Label(master, textvariable=self.hitRules_text)
+        self.hitRules_label = Label(master, textvariable=self.hitRules_text, borderwidth=2, width=15, height = 5, relief="groove", font=("Comic Sans MS",25))
 
 
 
@@ -101,9 +101,9 @@ class Deck:
         self.b12.place(x=1050, y=610)
         self.b13.place(x=1050, y=640)
         self.b14.place(x=1050, y=670)
-        self.detectionResult_label.place(x=100, y=500)
-        self.matchedFacts_label.place(x=450, y=500)
-        self.hitRules_label.place(x=780, y=500)
+        self.detectionResult_label.place(x=60, y=450)
+        self.matchedFacts_label.place(x=400, y=450)
+        self.hitRules_label.place(x=710, y=450)
     
 		#konfigurasi button untuk hovering mouse
         self.img_button.bind("<Enter>", self.on_enter_img)
@@ -132,6 +132,8 @@ class Deck:
         photo=ImageTk.PhotoImage(im)  
         self.source_img.configure(image = photo)
         self.source_img.image = photo 
+
+        return self.filename
 
     # def create_window():
     #     window = tk.Toplevel(self)
