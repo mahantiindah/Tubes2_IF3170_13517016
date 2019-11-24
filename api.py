@@ -3,6 +3,32 @@ import numpy as np
 
 from clips import Environment, Symbol
 
+
+
+def getAngle(a, b, c):
+    ang = math.degrees(math.atan2(c[1]-b[1], c[0]-b[0]) - math.atan2(a[1]-b[1], a[0]-b[0]))
+    return ang + 360 if ang < 0 else ang
+
+def isSamaSisi(app):
+    edgeList = []
+    for i in range(len(app)-1):
+        edgeList.append(getDistance(app[i],app[i+1]))
+
+    return checkEqual(edgeList)
+
+        
+
+def checkEqual(lst):
+   return lst[1:] == lst[:-1]
+
+def getDistance(a,b):
+    ax = a[0][0]
+    ay = a[0][1]
+    bx = b[0][0]
+    by = b[0][1]
+
+    return np.sqrt((ax - bx)**2 + (ay - by)**2)
+
 e = Environment()
 
 # Pilih rule
@@ -31,31 +57,45 @@ for cnt in contours:
     y = approx.ravel()[1]
     # print(cv2.arcLength(cnt, True))
 
+
+    
+
     # Klasifikasi berdasarkan jumlah sisi
+
     if len(approx) == 3:
         # e.assert_string("(titik 1 1)")
         # e.assert_string("(titik 1 2)")
         # e.assert_string("(titik 2 1)")
 
         # Assert fakta berupa titik shape
-        f'''or a in approx:
+        '''for a in approx:
 
             print("(titik " + str(a[0][0]) + " " + str(a[0][1]) + ")")
             strInput = "(titik " + str(a[0][0]) + " " + str(a[0][1]) + ")"
             print(strInput)
             e.assert_string(strInput)'''
-         e.assert_string('(titik 3)')
+        if(isSamaSisi(approx)):
+            e.assert_string('(sisi total)')
+        e.assert_string('(titik 3)')
+        
+            
         cv2.putText(img, "Segitiga", (x, y), font, 1, (0))
     elif len(approx) == 4:
+        if(isSamaSisi(approx)):
+            e.assert_string('(sisi total)')
         e.assert_string('(titik 4)')
         cv2.putText(img, "Persegi", (x, y), font, 1, (0))
 
     elif len(approx) == 5:
+        if(isSamaSisi(approx)):
+            e.assert_string('(sisi total)')
         e.assert_string('(titik 5)')
         cv2.putText(img, "Segi Lima", (x, y), font, 1, (0))
 
     elif len(approx) == 6:
 
+        if(isSamaSisi(approx)):
+            e.assert_string('(sisi total)')
         e.assert_string('(titik 6)')
         cv2.putText(img, "Segi Enam", (x, y), font, 1, (0))
 
@@ -78,9 +118,9 @@ print("\n\nFinal Facts :")
 for fact in e.facts():
     print(fact)
 
-print("\nRules :")
+'''print("\nRules :")
 for rule in e.rules():
-    print(rule)
+    print(rule)'''
 
 cv2.imshow("shapes", img)
 cv2.imwrite("result.jpg", img)
@@ -88,16 +128,3 @@ cv2.imwrite("result.jpg", img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-
-def getAngle(a, b, c):
-    ang = math.degrees(math.atan2(c[1]-b[1], c[0]-b[0]) - math.atan2(a[1]-b[1], a[0]-b[0]))
-    return ang + 360 if ang < 0 else ang
-
-'''def isSamaSisi(app):
-    edgeList = []
-    for i in range(len(app)):
-        #edgeList.append()
-        '''
-
-def checkEqual(lst):
-   return lst[1:] == lst[:-1]
