@@ -21,3 +21,4 @@ segitiga-lancip
 segitiga-siku
 print-solution
 startup
+solution bangun segitiga-lancip

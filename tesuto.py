@@ -10,8 +10,7 @@ from tkinter import filedialog
 from tkinter import ttk
 from tkinter import Tk, Text, BOTH, W, N, E, S
 from tkinter.filedialog import askopenfile 
-import threading
-# from api import *
+#from api import *
 
 width = 1080
 height = 720
@@ -54,20 +53,20 @@ class Deck:
         self.labelShape = Label(master, text="What shape do you want", font=("Comic Sans MS",12))
 
         # Konfigurasi button pilih bentuk untuk dibandingkan
-        self.b1 = Button(master, text="Segitiga lancip", font=("Comic Sans MS",8), command=self.compareShape)
-        self.b2 = Button(master, text="Segitiga tumpul", font=("Comic Sans MS",8), command=self.compareShape)
-        self.b3 = Button(master, text="Segitiga siku-siku", font=("Comic Sans MS",8), command=self.compareShape)
-        self.b4 = Button(master, text="Segitiga sama kaki dan siku-siku", font=("Comic Sans MS",8), command=self.compareShape)
-        self.b5 = Button(master, text="Segitiga sama kaki dan tumpul", font=("Comic Sans MS",8), command=self.compareShape)
-        self.b6 = Button(master, text="Segitiga sama kaki dan lancip", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b7 = Button(master, text="Segitiga sama sisi", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b8 = Button(master, text="Segiempat beraturan", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b9 = Button(master, text="Segitiga berbentuk layang-layang", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b10 = Button(master, text="Trapezium sama kaki", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b11 = Button(master, text="Trapezium rata kanan", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b12 = Button(master, text="Trapezium rata kiri", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b13 = Button(master, text="Segi lima sama sisi", font=("Comic Sans MS",8),command=self.compareShape)
-        self.b14 = Button(master, text="Segi enam sama sisi", font=("Comic Sans MS",8),command=self.compareShape)
+        self.b1 = Button(master, text="Segitiga lancip", font=("Comic Sans MS",8), command=lambda:self.compareShape("segitiga-lancip"))
+        self.b2 = Button(master, text="Segitiga tumpul", font=("Comic Sans MS",8), command=lambda:self.compareShape("segitiga-tumpul"))
+        self.b3 = Button(master, text="Segitiga siku-siku", font=("Comic Sans MS",8), command=lambda:self.compareShape("segitiga-siku"))
+        self.b4 = Button(master, text="Segitiga sama kaki dan siku-siku", font=("Comic Sans MS",8), command=lambda:self.compareShape("segitiga-sama-kaki-siku"))
+        self.b5 = Button(master, text="Segitiga sama kaki dan tumpul", font=("Comic Sans MS",8), command=lambda:self.compareShape("segitiga-sama-kaki-tumpul"))
+        self.b6 = Button(master, text="Segitiga sama kaki dan lancip", font=("Comic Sans MS",8),command=lambda:self.compareShape("segitiga-sama-kaki-lancip"))
+        self.b7 = Button(master, text="Segitiga sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segitiga-sama-sisi"))
+        self.b8 = Button(master, text="Segiempat beraturan", font=("Comic Sans MS",8),command=lambda:self.compareShape("segiempat"))
+        self.b9 = Button(master, text="Segitiga berbentuk layang-layang", font=("Comic Sans MS",8),command=lambda:self.compareShape("layang-layang"))
+        self.b10 = Button(master, text="Trapezium sama kaki", font=("Comic Sans MS",8),command=lambda:self.compareShape("trapesium-sama-kaki"))
+        self.b11 = Button(master, text="Trapezium rata kanan", font=("Comic Sans MS",8),command=lambda:self.compareShape("trapesium-rata-kanan"))
+        self.b12 = Button(master, text="Trapezium rata kiri", font=("Comic Sans MS",8),command=lambda:self.compareShape("trapesium-rata-kiri"))
+        self.b13 = Button(master, text="Segi lima sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segi-lima-sama-sisi"))
+        self.b14 = Button(master, text="Segi enam sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segi-enam-sama-sisi"))
 
         # Konfigurasi hasil detection result, matched facts, hit rules
         self.detectionResult, self.detectionResult_text = "", StringVar()
@@ -205,13 +204,16 @@ class Deck:
         lFacts.pack()
         print('facts')
 
-    def compareShape(self):
+    def compareShape(self,name):
         # Jalanin fungsinya
-        if (1):
-            self.detectionResult_text.set("YES");
+        #detection()
+        file1 = open("matched_facts.txt","r")
+        content1 = file1.readlines()
+        if (name==content1[-1].split()[-1]):
+            self.detectionResult_text.set("YES")
         
         else:
-            self.detectionResult_text.set("NO");
+            self.detectionResult_text.set("NO")
         # matched facts dari e.fact
         file = open("matched_facts.txt","r")
         content = file.read()
