@@ -99,15 +99,16 @@ for cnt in contours:
         e.assert_string('(titik 6)')
         cv2.putText(img, "Segi Enam", (x, y), font, 1, (0))
 
-
+outputFile = open("fakta.txt","w")
+list_fact =''
 # Print initial facts
 print("\nInitial Facts :")
 for fact in e.facts():
-    print(fact)
+    list_fact += fact + '\n'
+    print(list_fact)
+outputFile.write(list_fact) 
+outputFile.close()
 
-print("\nAgenda :")
-for agenda in e.activations():
-    print(agenda)
 
 # Kalo mau run sekali, pake e.run(1)
 # Kalo mau run sampai habis, pake e.run()
@@ -115,8 +116,23 @@ e.run()
 
 # Print all facts at the end
 print("\n\nFinal Facts :")
+outputFile = open("matched_facts.txt","w")
+list_fact =''
 for fact in e.facts():
-    print(fact)
+    list_fact += fact + '\n'
+    print(list_fact)
+outputFile.write(list_fact) 
+outputFile.close()
+
+# Agenda
+print("\nAgenda :")
+outputFile = open("hit_rules.txt","w")
+list_agenda =''
+for agenda in e.activations():
+    list_agenda += agenda + '\n'
+    print(list_agenda)
+outputFile.write(list_agenda) 
+outputFile.close()
 
 '''print("\nRules :")
 for rule in e.rules():

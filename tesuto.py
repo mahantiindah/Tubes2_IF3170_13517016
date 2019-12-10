@@ -10,7 +10,8 @@ from tkinter import filedialog
 from tkinter import ttk
 from tkinter import Tk, Text, BOTH, W, N, E, S
 from tkinter.filedialog import askopenfile 
-from api import *
+import threading
+# from api import *
 
 width = 1080
 height = 720
@@ -75,11 +76,11 @@ class Deck:
 
         self.matchedFacts, self.matchedFacts_text = "", StringVar()
         self.matchedFacts_text.set(self.matchedFacts)
-        self.matchedFacts_label = Label(master, textvariable=self.matchedFacts_text, borderwidth=2, width=15, height = 5, relief="groove", font=("Comic Sans MS",25))
+        self.matchedFacts_label = Label(master, textvariable=self.matchedFacts_text, borderwidth=2, width=28, height = 9, relief="groove", font=("Comic Sans MS",15))
 
         self.hitRules, self.hitRules_text = "", StringVar()
         self.hitRules_text.set(self.hitRules)
-        self.hitRules_label = Label(master, textvariable=self.hitRules_text, borderwidth=2, width=15, height = 5, relief="groove", font=("Comic Sans MS",25))
+        self.hitRules_label = Label(master, textvariable=self.hitRules_text, borderwidth=2, width=28, height = 9, relief="groove", font=("Comic Sans MS",15))
 
 
 
@@ -192,9 +193,10 @@ class Deck:
         print('rules button u')
 
     # Show facts
+    # DARI initial fact
     def facts(self, master):
         #INSERT NAMA FILE FACTS
-        file = open("tes.txt","r")
+        file = open("fakta.txt","r")
         content = file.read()
         window = Toplevel(master)
         window.wm_title("Facts")
@@ -210,8 +212,13 @@ class Deck:
         
         else:
             self.detectionResult_text.set("NO");
-        self.matchedFacts_text.set("matchedFacts")
-        self.hitRules_text.set("hitRules")
+        # matched facts dari e.fact
+        file = open("matched_facts.txt","r")
+        content = file.read()
+        self.matchedFacts_text.set(content)
+        rule = open("hit_rules.txt","r")
+        contents = rule.read()
+        self.hitRules_text.set(contents)
 
     # Popup on exit
     def exite(self):
