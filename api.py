@@ -169,18 +169,18 @@ def getEdgeFact(edges):
 e = Environment()
 
     # Pilih rule
-    e.load('geometri.clp')
+e.load('geometri.clp')
 
     # Load image
-    img = cv2.imread("segitiga.jpg", cv2.IMREAD_GRAYSCALE)
-    _, threshold = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
+img = cv2.imread("segitiga.jpg", cv2.IMREAD_GRAYSCALE)
+_, threshold = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
 
     # Buat contours
-    contours, _ = cv2.findContours(
-        threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+contours, _ = cv2.findContours(
+    threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     # Pilih font
-    font = cv2.FONT_HERSHEY_COMPLEX
+font = cv2.FONT_HERSHEY_COMPLEX
 
 
 for cnt in contours[1:]:
@@ -188,17 +188,17 @@ for cnt in contours[1:]:
     approx = cv2.approxPolyDP(cnt, 0.01*cv2.arcLength(cnt, True), True)
 
         # Gambar contour
-        cv2.drawContours(img, [approx], 0, (0), 5)
+    cv2.drawContours(img, [approx], 0, (0), 5)
 
-        # Get x, y untuk text
-        x = approx.ravel()[0]
-        y = approx.ravel()[1]
+    # Get x, y untuk text
+    x = approx.ravel()[0]
+    y = approx.ravel()[1]
         # print(cv2.arcLength(cnt, True))
 
 
     for a in approx:
 
-            print("(titik " + str(a[0][0]) + " " + str(a[0][1]) + ")")
+        print("(titik " + str(a[0][0]) + " " + str(a[0][1]) + ")")
 
     for i in getSisi(approx):
         print(i)
