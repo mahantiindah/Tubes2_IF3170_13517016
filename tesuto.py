@@ -135,8 +135,12 @@ class Deck:
 	# Fungsi yang dijalnkan saat button dipencet
     def retrieve_input(self, area, window):
         inputValue=area.get("1.0","end-1c")
-        print(inputValue)
+        #NAMA FILENYA NEED EDIT
+        outputFile = open("myfile.clp","w")
+        outputFile.write(inputValue) 
+        outputFile.close()
         window.destroy()
+
     # Pick source image
     def img_button(self):
         # OPEN IMAGE BASE
@@ -152,35 +156,25 @@ class Deck:
 
         return self.filename
 
-    # def create_window():
-    #     window = tk.Toplevel(self)
-    #     area = tk.Text(window)
-    #     area.pack()
-    #     b = tk.Button(window, text="Save", command=lambda: retrieve_input(area, window))
-    #     b.pack()
-
-    # def retrieve_input(area, window):
-    #     inputValue=area.get("1.0","end-1c")
-    #     print(inputValue)
-    #     window.destroy()
-
      # Open rule editor
     def rule_edit(self, master):
         print('rules edit')
-        # create_window()
         window = Toplevel(master)
         window.wm_title("Edit Rules")
         area = Text(window)
+        #NAMA FILENYA NEED EDIT
+        file = open("myfile.clp","r")
+        content = file.read()
+        area.insert("end-1c",content)
         area.pack()
         b = Button(window, text="Save", command=lambda: self.retrieve_input(area, window))
         b.pack()
-        #window.attributes('-topmost', 'true')
 
     # Show rules
     def rules(self, master):
         print('rules button u')
         #INSERT NAMA FILE RULES
-        file = open("tes.txt","r")
+        file = open("geometri.clp","r")
         content = file.read()
         print(content)
         window = Toplevel(master)
