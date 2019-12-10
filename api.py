@@ -168,32 +168,32 @@ def getEdgeFact(edges):
 
 e = Environment()
 
-# Pilih rule
-e.load('geometri.clp')
+    # Pilih rule
+    e.load('geometri.clp')
 
-# Load image
-img = cv2.imread("segitiga.jpg", cv2.IMREAD_GRAYSCALE)
-_, threshold = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
+    # Load image
+    img = cv2.imread("segitiga.jpg", cv2.IMREAD_GRAYSCALE)
+    _, threshold = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
 
-# Buat contours
-contours, _ = cv2.findContours(
-    threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # Buat contours
+    contours, _ = cv2.findContours(
+        threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-# Pilih font
-font = cv2.FONT_HERSHEY_COMPLEX
+    # Pilih font
+    font = cv2.FONT_HERSHEY_COMPLEX
 
 
 for cnt in contours[1:]:
     # Aproksimasi sisi polygon
     approx = cv2.approxPolyDP(cnt, 0.01*cv2.arcLength(cnt, True), True)
 
-    # Gambar contour
-    cv2.drawContours(img, [approx], 0, (0), 5)
+        # Gambar contour
+        cv2.drawContours(img, [approx], 0, (0), 5)
 
-    # Get x, y untuk text
-    x = approx.ravel()[0]
-    y = approx.ravel()[1]
-    # print(cv2.arcLength(cnt, True))
+        # Get x, y untuk text
+        x = approx.ravel()[0]
+        y = approx.ravel()[1]
+        # print(cv2.arcLength(cnt, True))
 
 
     for a in approx:
@@ -209,7 +209,7 @@ for cnt in contours[1:]:
 
                 
 
-    # Klasifikasi berdasarkan jumlah sisi
+        # Klasifikasi berdasarkan jumlah sisi
 
     print(len(approx))
     if len(approx) == 3:
