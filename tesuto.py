@@ -10,12 +10,13 @@ from tkinter import filedialog
 from tkinter import ttk
 from tkinter import Tk, Text, BOTH, W, N, E, S
 from tkinter.filedialog import askopenfile 
-#from api import *
+from api import *
 
 width = 1080
 height = 720
 class Deck:
     def __init__(self, master):
+        self.source_file = ''
         self.source_img = Label(master, text='')
         self.det_img = Label(master, text='')
         # deckimg = PhotoImage(file = os.path.dirname(os.path.abspath('tesuto.py')) + '/purple_back.png')
@@ -132,7 +133,7 @@ class Deck:
     def retrieve_input(self, area, window):
         inputValue=area.get("1.0","end-1c")
         #NAMA FILENYA NEED EDIT
-        outputFile = open("myfile.clp","w")
+        outputFile = open("geometri.clp","w")
         outputFile.write(inputValue) 
         outputFile.close()
         window.destroy()
@@ -141,8 +142,7 @@ class Deck:
     def img_button(self):
         # OPEN IMAGE BASE
         self.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
-        a = self.filename
-        print (self.filename)
+        self.source_file = self.filename
         # return 1
         im = PIL.Image.open(self.filename)
         im = im.resize((300, 300), PIL.Image.ANTIALIAS)
@@ -159,7 +159,7 @@ class Deck:
         window.wm_title("Edit Rules")
         area = Text(window)
         #NAMA FILENYA NEED EDIT
-        file = open("myfile.clp","r")
+        file = open("geometri.clp","r")
         content = file.read()
         area.insert("end-1c",content)
         area.pack()
@@ -206,14 +206,21 @@ class Deck:
 
     def compareShape(self,name):
         # Jalanin fungsinya
-        #detection()
+        detection(self.source_file)
         file1 = open("matched_facts.txt","r")
         content1 = file1.readlines()
-        if (name==content1[-1].split()[-1]):
+
+        if (name==content1[-1].split()[-1].rstrip(')')):
             self.detectionResult_text.set("YES")
-        
         else:
             self.detectionResult_text.set("NO")
+
+        im = PIL.Image.open("result.jpg")
+        im = im.resize((300, 300), PIL.Image.ANTIALIAS)
+        photo=ImageTk.PhotoImage(im)  
+        self.det_img.configure(image = photo)
+        self.det_img.image = photo 
+        
         # matched facts dari e.fact
         file = open("matched_facts.txt","r")
         content = file.read()
