@@ -223,19 +223,3 @@ YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     "startup"  crlf)
   
 )
-
-gimana ya
-
-(defrule coba-print
-  (jenis segitiga)
-  =>
-  (printout t
-    "nah"  crlf
-    )
-)
-
-bisa
-
-GA SIH?
-
-AKU PENASARAN BISA ATAU GA YAAA...."-

@@ -10,13 +10,9 @@ from tkinter import filedialog
 from tkinter import ttk
 from tkinter import Tk, Text, BOTH, W, N, E, S
 from tkinter.filedialog import askopenfile 
-#from ui7 import *
-# import back
-#pengaturan layar UI
-#width = int(NSScreen.mainScreen().frame().size.width)
-#height = int(NSScreen.mainScreen().frame().size.height)
+from api import *
+
 width = 1080
-#1366768
 height = 720
 class Deck:
     def __init__(self, master):
@@ -173,16 +169,25 @@ class Deck:
     # Show rules
     def rules(self, master):
         print('rules button u')
-        #INSERT NAMA FILE RULES
-        file = open("geometri.clp","r")
-        content = file.read()
-        print(content)
         window = Toplevel(master)
-        #window = Tk()
         window.wm_title("Rules")
-        lRules = ttk.Label(window, text=content)
+        scrollbar = Scrollbar(window)
+        scrollbar.pack(side=RIGHT, fill=Y)
+        listbox = Listbox(window)
+        listbox.pack(side="left",fill="both",expand=True)
+        #INSERT NAMA FILE RULES
+        file = open("geometri.clp","r").readlines()
+        for i in file:
+            listbox.insert(END, i)
+        listbox.config(width=50,yscrollcommand=scrollbar.set)
+        scrollbar.config(command=listbox.yview)
+        # content = file.read()
+        # print(content)
+
+        
+        # lRules = ttk.Label(window, text=content)
         #lRules = Label(window, textvariable=content, relief=RAISED )
-        lRules.pack()
+        # lRules.pack()
         #window.attributes('-topmost', 'true')
         print('rules button u')
 
