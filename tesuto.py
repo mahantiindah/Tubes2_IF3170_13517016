@@ -61,13 +61,13 @@ class Deck:
         self.b5 = Button(master, text="Segitiga sama kaki dan tumpul", font=("Comic Sans MS",8), command=lambda:self.compareShape("segitiga-sama-kaki-tumpul"))
         self.b6 = Button(master, text="Segitiga sama kaki dan lancip", font=("Comic Sans MS",8),command=lambda:self.compareShape("segitiga-sama-kaki-lancip"))
         self.b7 = Button(master, text="Segitiga sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segitiga-sama-sisi"))
-        self.b8 = Button(master, text="Segiempat beraturan", font=("Comic Sans MS",8),command=lambda:self.compareShape("segiempat"))
+        self.b8 = Button(master, text="Segiempat beraturan", font=("Comic Sans MS",8),command=lambda:self.compareShape("persegi"))
         self.b9 = Button(master, text="Segitiga berbentuk layang-layang", font=("Comic Sans MS",8),command=lambda:self.compareShape("layang-layang"))
         self.b10 = Button(master, text="Trapezium sama kaki", font=("Comic Sans MS",8),command=lambda:self.compareShape("trapesium-sama-kaki"))
         self.b11 = Button(master, text="Trapezium rata kanan", font=("Comic Sans MS",8),command=lambda:self.compareShape("trapesium-rata-kanan"))
         self.b12 = Button(master, text="Trapezium rata kiri", font=("Comic Sans MS",8),command=lambda:self.compareShape("trapesium-rata-kiri"))
-        self.b13 = Button(master, text="Segi lima sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segi-lima-sama-sisi"))
-        self.b14 = Button(master, text="Segi enam sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segi-enam-sama-sisi"))
+        self.b13 = Button(master, text="Segi lima sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segilima-sama-sisi"))
+        self.b14 = Button(master, text="Segi enam sama sisi", font=("Comic Sans MS",8),command=lambda:self.compareShape("segienam-sama-sisi"))
 
         # Konfigurasi hasil detection result, matched facts, hit rules
         self.detectionResult, self.detectionResult_text = "", StringVar()

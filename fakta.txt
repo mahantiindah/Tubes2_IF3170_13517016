@@ -1,4 +1,4 @@
 (initial-fact)
-(sisi berantakan)
-(sudut lancip)
-(titik 3)
+(sisi total)
+(sudut total)
+(titik 4)

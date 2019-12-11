@@ -1,2 +1,2 @@
-0      segitiga: f-3
+0      segiempat: f-3
 0      startup: *
