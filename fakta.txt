@@ -1,4 +1,4 @@
 (initial-fact)
+(titik 4)
 (sisi total)
 (sudut total)
-(titik 4)

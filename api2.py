@@ -82,7 +82,7 @@ def getAngleFact(ang):
                 count = ang.count(x)
                 countUsed = usedNumber.count(x)
                 if(count > 1 and countUsed == 0):
-                    usedNumber.append(x)
+                    countUsed.append(x)
             
             if(len(usedNumber) == 2):
                 if(not compareGalat(usedNumber[0],usedNumber[1])):
@@ -189,7 +189,7 @@ def detection(file_name):
 
             # Gambar contour
         cv2.drawContours(img, [approx], 0, (0), 5)
-        
+        #cv2.imshow("contours", img)
         cv2.imwrite("result.jpg", img)
 
         # Get x, y untuk text
@@ -216,44 +216,32 @@ def detection(file_name):
         print(len(approx))
         if len(approx) == 3:
             # Assert fakta berupa titik shape
-            e.assert_string('(titik 3)')
+            
             e.assert_string(getEdgeFact(getSisi(approx)))
             e.assert_string(getAngleFact(getSudut(approx)))
+            e.assert_string('(titik 3)')
                 
             cv2.putText(img, "Segitiga", (x, y), font, 1, (0))
     
         elif len(approx) == 4:
-            faktaSudut = getEdgeFact(getSisi(approx))
-            e.assert_string('(titik 4)')
-            e.assert_string(faktaSudut)
+
+            e.assert_string(getEdgeFact(getSisi(approx)))
             e.assert_string(getAngleFact(getSudut(approx)))
-
-            if (faktaSudut == '(sisi berantakan)'):
-                siku = any(compareGalat(sudut,90) for sudut in getSudut(approx))
-                if(siku):
-                    e.assert_string('(sudut siku)')
-                    if (compareGalat(getSudut(approx)[1],90)):
-                        e.assert_string('(siku kanan)')
-                    else:
-                        e.assert_string('(siku kiri)')
-
+            e.assert_string('(titik 4)')
 
                 
             cv2.putText(img, "Persegi", (x, y), font, 1, (0))
 
         elif len(approx) == 5:
-            e.assert_string('(titik 5)')
             e.assert_string(getEdgeFact(getSisi(approx)))
+            e.assert_string('(titik 5)')
             cv2.putText(img, "Segi Lima", (x, y), font, 1, (0))
 
         elif len(approx) == 6:
 
-            e.assert_string('(titik 6)')
             e.assert_string(getEdgeFact(getSisi(approx)))
+            e.assert_string('(titik 6)')
             cv2.putText(img, "Segi Enam", (x, y), font, 1, (0))
-
-    
-
 
     # Print initial facts
     print("\nInitial Facts :")
@@ -287,6 +275,10 @@ def detection(file_name):
     outputFile = open("matched_facts.txt","w")
     outputFile.write(list_fact) 
     outputFile.close()
+
+    #cv2.imshow("shapes", img)
+    #cv2.imshow("Threshold", threshold)
+    #cv2.imwrite("result.jpg", threshold)
 
 
 # cv2.imshow("shapes", img)

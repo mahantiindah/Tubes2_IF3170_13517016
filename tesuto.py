@@ -25,6 +25,7 @@ class Deck:
 
         #SOURCE IMAGE
         im = PIL.Image.open("blankcard.jpg")
+        width, height = im.size
         im = im.resize((300, 300), PIL.Image.ANTIALIAS)
         photo=ImageTk.PhotoImage(im)  
         self.source_img.configure(image = photo)
@@ -32,6 +33,7 @@ class Deck:
 
         #DETECTION IMAGE
         im = PIL.Image.open("blankcard.jpg")
+        width, height = im.size
         im = im.resize((300, 300), PIL.Image.ANTIALIAS)
         photo=ImageTk.PhotoImage(im)  
         self.det_img.configure(image = photo)
@@ -141,7 +143,7 @@ class Deck:
     # Pick source image
     def img_button(self):
         # OPEN IMAGE BASE
-        self.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        self.filename =  filedialog.askopenfilename(initialdir = "/Tubes2_IF3170_13517016",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
         self.source_file = self.filename
         # return 1
         im = PIL.Image.open(self.filename)
@@ -209,8 +211,10 @@ class Deck:
         detection(self.source_file)
         file1 = open("matched_facts.txt","r")
         content1 = file1.readlines()
-
-        if (name==content1[-1].split()[-1].rstrip(')')):
+        nama = content1[-1].split()[-1].rstrip(')')
+        if ("jajar-genjang"==nama):
+            nama = "persegi"
+        if (name==nama):
             self.detectionResult_text.set("YES")
         else:
             self.detectionResult_text.set("NO")

@@ -104,8 +104,9 @@
 ;untuk trapesium belum nemu caranya
 (defrule trapesium-sama-kaki
   (jenis segiempat)
-  (sudut total)
-  (sisi total)
+  (sudut kembar-dua)
+  (sisi kembar-satu)
+  
 
   => 
   (assert (solution bangun trapesium-sama-kaki)
@@ -115,8 +116,10 @@
 ;belum
 (defrule trapesium-rata-kiri
   (jenis segiempat)
-  (sudut total)
-  (sisi total)
+  (sudut berantakan)
+  (sisi berantakan)
+  (sudut siku)
+  (siku kiri)
 
   => 
   (assert (solution bangun trapesium-rata-kiri)
@@ -126,8 +129,10 @@
 ;belum
 (defrule trapesium-rata-kanan
   (jenis segiempat)
-  (sudut total)
-  (sisi total)
+  (sudut berantakan)
+  (sisi berantakan)
+  (sudut siku)
+  (siku kanan)
 
   => 
   (assert (solution bangun trapesium-rata-kanan)
